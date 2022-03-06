@@ -1,22 +1,26 @@
 const fs = require('fs');
-// const loki = require('lokijs');
+const loki = require('lokijs');
 
 function MarkdownDataSource() {
 
   this.documentsBaseDir;
   var excludeRootDirInPath = true;
   var sequence = 0;
-  // this.database = new loki('database.json');
-  // this.documents = this.database.addCollection('documents');
-  this.documents = [];
-
-  // this.getDocuments = () => {
-  //   return this.database.getCollection('documents');
-  // };
+  this.database = new loki('theme/database.json');
+  this.documents = this.database.addCollection('documents');
+  // this.documents = [];
 
   this.getDocuments = () => {
-    return this.documents;
+    return this.database.getCollection('documents');
   };
+
+  this.save = () => {
+    this.database.saveDatabase();
+  };
+
+  // this.getDocuments = () => {
+  //   return this.documents;
+  // };
 
   this.setDocumentsBaseDir = (documentsBaseDir) => {
     return this.documentsBaseDir = documentsBaseDir;
@@ -36,13 +40,13 @@ function MarkdownDataSource() {
       if (fs.statSync(dir + file).isDirectory()) {
         let id = this.next();
         let meta = this.getMetaForDirectoryIfExist(dir + file);
-        this.getDocuments().push({
+        this.getDocuments().insert({
           ...{
             "path": this.getFixedPath(this.getDocumentsBaseDir(), dir + file),
             "id": id,
             "parent": parent,
             "name": file,
-            "content": this.getMarkdownContentIfExist(dir + file + "/_index.md"),
+            "text": this.getMarkdownContentIfExist(dir + file + "/_index.md"),
             "type": "node"
           },
           ...meta
@@ -53,13 +57,13 @@ function MarkdownDataSource() {
         if (file != "_index.md" && file.endsWith(".md")) {
           let id = this.next();
           let meta = this.getMetaForMarkdownIfExist(dir + file);
-          this.getDocuments().push({
+          this.getDocuments().insert({
             ...{
               "path": this.getFixedPath(this.getDocumentsBaseDir(), dir + file),
               "id": id,
               "parent": parent,
               "type": "child",
-              "content": this.getMarkdownContentIfExist(dir + file),
+              "text": this.getMarkdownContentIfExist(dir + file),
               "name": file,
             },
             ...meta

@@ -11,7 +11,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dashboard | Bootstrap Simple Admin Template</title>
+    <title>Docs4All Ligth</title>
+    <link rel="icon" href="data:,">
     <link href="assets/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
     <link href="assets/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
     <link href="assets/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
@@ -19,6 +20,9 @@
     <link href="assets/css/master.css" rel="stylesheet">
     <link href="assets/vendor/flagiconcss/css/flag-icon.min.css" rel="stylesheet">
     <link href="assets/slide_menu/slide-menu.css" rel="stylesheet">
+    <link href="assets/css/github-markdown.css" rel="stylesheet">
+    <script type="text/javascript" src="assets/js/markdown-it-12.0.4.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/techfort/LokiJS/master/src/lokijs.js"></script>
     <!-- <link href="assets/slide_menu/slide-menu-additional.css" rel="stylesheet"> -->
     <style media="screen">
     .slide-menu {
@@ -26,6 +30,9 @@
     }
     #sidebar ul ul a {
       background: unset;
+    }
+    .slide-menu {
+      height: unset;
     }
     </style>
 </head>
@@ -36,101 +43,8 @@
             <div class="sidebar-header">
                 <img src="assets/img/bootstraper-logo.png" alt="bootraper logo" class="app-logo">
             </div>
-            <ul class="list-unstyled components text-secondary">
-              <li>
-                <a href="http://google.de">News</a>
-                <ul>
-                  <li>
-                    <a href="#">News 1.1</a>
-                  </li>
-                  <li>
-                    <a href="http://google.de">News 1.2</a>
-                    <ul>
-                      <li>
-                        <a href="http://google.de">News 1.2.1</a>
-                      </li>
-                      <li>
-                        <a href="#" id="special-link-1">News 1.2.2 &ndash; I'm special (1)!</a>
-                      </li>
-                      <li>
-                        <a href="#">News 1.2.2</a>
-                      </li>
-                      <li>
-                        <a href="#">News 1.2.3</a>
-                        <ul>
-                          <li>
-                            <a href="#">News 1.2.3.1</a>
-                          </li>
-                          <li>
-                            <a href="#">News 1.2.3.2</a>
-                          </li>
-                          <li>
-                            <a href="#">News 1.2.3.3</a>
-                          </li>
-                          <li id="special-link-2">
-                            <a href="#">News 1.2.3.4 - I'm special (2)!</a>
-                          </li>
-                          <li>
-                            <a href="#">News 1.2.3.5</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <a href="#">News 1.2.4</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="#">News 1.3</a>
-                  </li>
-                  <li>
-                    <a href="#">News 1.3</a>
-                  </li>
-                  <li>
-                    <a href="#">News 1.4</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="#" id="special-link-3">Blog</a>
-              </li>
-              <li>
-                <a href="#">About</a>
-                <ul>
-                  <li>
-                    <a href="#">About 1.1</a>
-                  </li>
-                  <li>
-                    <a href="#">About 1.2</a>
-                    <ul>
-                      <li>
-                        <a href="#">About 1.2.1</a>
-                      </li>
-                      <li>
-                        <a href="#">About 1.2.2</a>
-                      </li>
-                      <li>
-                        <a href="#">About 1.2.3</a>
-                      </li>
-                      <li>
-                        <a href="#">About 1.2.4</a>
-                      </li>
-                      <li>
-                        <a href="#">About 1.2.5</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="#">About 1.3</a>
-                  </li>
-                  <li>
-                    <a href="#">About 1.4</a>
-                  </li>
-                  <li>
-                    <a href="#">About 1.5</a>
-                  </li>
-                </ul>
-              </li>
+            <ul id="menuContainer" class="list-unstyled components text-secondary">
+
             </ul>
         </nav>
         <div id="body" class="active">
@@ -190,17 +104,22 @@
             </nav>
             <!-- end of navbar navigation -->
             <div class="content">
-                <div class="container">
+                <div class="container content markdown-body" id="rigthPreview">
 
                 </div>
             </div>
         </div>
     </div>
-    <script src="assets/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/script.js"></script>
+    <script type="text/javascript" src="./assets/vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="./assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="./assets/js/sidebar-controller.js"></script>
     <script type="text/javascript" src="./assets/slide_menu/slide-menu.js"></script>
-    <script type="text/javascript" src="./assets/slide_menu/main.js"></script>
+    <script type="text/javascript" src="./assets/js/api-client.js"></script>
+    <script type="text/javascript" src="./assets/js/menu-enhancer.js"></script>
+    <script type="text/javascript" src="./assets/js/left-menu-html-generator.js"></script>
+    <script type="text/javascript" src="./assets/js/markdown-converter.js"></script>
+    <script type="text/javascript" src="./assets/js/menu-controller.js"></script>
+    <script type="text/javascript" src="./assets/js/app-entrypoint.js"></script>
 </body>
 
 </html>

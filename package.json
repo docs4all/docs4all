@@ -4,12 +4,13 @@
   "main": "server.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
+    "dev": "nodemon --ignore theme/data.json --ignore theme/database.json index.js",
     "build": "echo \"build\""
   },
   "dependencies": {
     "ejs": "3.0.2",
     "express": "4.17.1",
+    "lokijs": "^1.5.12",
     "nodemon": "^2.0.15"
   }
 }
