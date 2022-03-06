@@ -1,5 +1,12 @@
 var express = require('express');
+var path = require('path');
+var MarkdownDataSource = require('./MarkdownDataSource.js');
 var app = express();
+
+var markdownDataSource = new MarkdownDataSource();
+markdownDataSource.setDocumentsBaseDir(path.join(__dirname, "docs"));
+markdownDataSource.loadDocuments(markdownDataSource.getDocumentsBaseDir());
+console.log(markdownDataSource.getDocuments());
 
 // set the port of our application
 var port = process.env.PORT || 8080;
