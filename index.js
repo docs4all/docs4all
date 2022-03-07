@@ -18,5 +18,5 @@ app.get('/', function(req, res) {
 });
 
 app.listen(port, function() {
-    console.log('Our app is running on ' + port);
+    console.log('Docs4All app is running on ' + port);
 });

@@ -30,17 +30,14 @@ function MenuEnhancer(){
 
     menuItemsData.forEach(function(menuItem){
       if(typeof menuItem.parent === 'undefined'){
-        if(menuItem.path!="/index.md"){
+        if(menuItem.path!="/root.md"){
           rootMenu.push(menuItem);
         }
       }
     });
 
-    console.log(rootMenu);
     rootMenu.sort(sortArrayByFieldOrder);
-    console.log("after");
-    console.log(rootMenu);
-
+    
     rootMenu.forEach(function(menuItem){
       anidateChildren(menuItemsData,menuItem);
     });

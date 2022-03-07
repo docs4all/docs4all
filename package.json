@@ -1,9 +1,9 @@
 {
   "name": "docs4all-ligth",
   "description": "docs4all-ligth",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node index.js",
     "dev": "nodemon --ignore theme/database.json --watch docs --watch theme   index.js",
     "build": "echo \"build\""
   },
