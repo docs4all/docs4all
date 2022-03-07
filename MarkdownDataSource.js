@@ -8,7 +8,6 @@ function MarkdownDataSource() {
   var sequence = 0;
   this.database = new loki('theme/database.json');
   this.documents = this.database.addCollection('documents');
-  // this.documents = [];
 
   this.getDocuments = () => {
     return this.database.getCollection('documents');
@@ -17,10 +16,6 @@ function MarkdownDataSource() {
   this.save = () => {
     this.database.saveDatabase();
   };
-
-  // this.getDocuments = () => {
-  //   return this.documents;
-  // };
 
   this.setDocumentsBaseDir = (documentsBaseDir) => {
     return this.documentsBaseDir = documentsBaseDir;
@@ -46,7 +41,7 @@ function MarkdownDataSource() {
             "id": id,
             "parent": parent,
             "name": file,
-            "text": this.getMarkdownContentIfExist(dir + file + "/_index.md"),
+            "text": this.getMarkdownContentIfExist(dir + file + "/index.md"),
             "type": "node"
           },
           ...meta
@@ -54,7 +49,7 @@ function MarkdownDataSource() {
         this.loadDocuments(dir + file + '/', id);
       } else {
 
-        if (file != "_index.md" && file.endsWith(".md")) {
+        if (file != "index.md" && file.endsWith(".md")) {
           let id = this.next();
           let meta = this.getMetaForMarkdownIfExist(dir + file);
           this.getDocuments().insert({
@@ -69,7 +64,6 @@ function MarkdownDataSource() {
             ...meta
           });
         }
-
       }
     });
   };

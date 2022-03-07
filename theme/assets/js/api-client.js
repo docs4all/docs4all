@@ -18,6 +18,7 @@ function ApiClient(){
 
   this.findAll = () => {
     return new Promise(function(resolve, reject) {
+      console.log(database.getCollection('documents').data);
       resolve(database.getCollection('documents').data);
     });
   };

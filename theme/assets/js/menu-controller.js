@@ -2,12 +2,13 @@ function MenuController() {
 
   var markdownConverter = window._context["MarkdownConverter"];
   var menuEnhancer = window._context["MenuEnhancer"];
-  var leftMenuHtmlGenerator = window._context["LeftMenuHtmlGenerator"];
+  var menuHtmlGenerator = window._context["MenuHtmlGenerator"];
   var apiClient = window._context["ApiClient"];
 
   this.init = async () => {
     await this.createMenu();
     this.addListener();
+    this.renderPageFromPath("/root.md")
   };
 
   this.addListener = () => {
@@ -17,8 +18,9 @@ function MenuController() {
 
   this.createMenu = async () => {
     var documents = await apiClient.findAll();
-    var enhancedMenu = menuEnhancer.perform(documents);
-    var menuString = leftMenuHtmlGenerator.createComplexMenu(enhancedMenu);
+    var enhancedMenu = menuEnhancer.plainLisToNestedList(documents);
+    console.log(enhancedMenu);
+    var menuString = menuHtmlGenerator.createComplexMenu(enhancedMenu);
     $("#menuContainer").append(menuString)
 
     const menuElement = document.getElementById('sidebar');

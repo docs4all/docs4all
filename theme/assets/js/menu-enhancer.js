@@ -1,11 +1,11 @@
 function MenuEnhancer(){
-  
+
  function anidateChildren(menuItemsData, parentItem){
-    
+
     if(typeof parentItem.children === 'undefined'){
       parentItem.children = [];
     }
-    
+
     menuItemsData.forEach(function(menuItem){
       delete menuItem.$loki
       delete menuItem.meta
@@ -17,32 +17,37 @@ function MenuEnhancer(){
           anidateChildren(menuItemsData,menuItem);
         }
       }
-    });  
-  };  
-  
+    });
+  };
+
   function sortArrayByFieldOrder(a,b){
     return (a.order > b.order) ? 1 : (a.order < b.order) ? -1 : 0;
   }
-  
-  this.perform = (  menuItemsData ) => {
-    
+
+  this.plainLisToNestedList = (  menuItemsData ) => {
+
     var rootMenu = [];
-    
+
     menuItemsData.forEach(function(menuItem){
       if(typeof menuItem.parent === 'undefined'){
-        rootMenu.push(menuItem);
+        if(menuItem.path!="/index.md"){
+          rootMenu.push(menuItem);
+        }
       }
     });
-        
+
+    console.log(rootMenu);
     rootMenu.sort(sortArrayByFieldOrder);
-    
+    console.log("after");
+    console.log(rootMenu);
+
     rootMenu.forEach(function(menuItem){
-      anidateChildren(menuItemsData,menuItem);    
+      anidateChildren(menuItemsData,menuItem);
     });
-    
+
     return rootMenu;
-  }  
-  
+  }
+
 }
 
 if(typeof window._context === 'undefined'){

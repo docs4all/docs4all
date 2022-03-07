@@ -1,10 +1,10 @@
 {
-  "name": "gmap-node-example",
-  "description": "gmap api test examples",
+  "name": "docs4all-ligth",
+  "description": "docs4all-ligth",
   "main": "server.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon --ignore theme/data.json --ignore theme/database.json index.js",
+    "start": "node server.js",
+    "dev": "nodemon --ignore theme/database.json --watch docs --watch theme   index.js",
     "build": "echo \"build\""
   },
   "dependencies": {

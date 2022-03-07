@@ -1,4 +1,4 @@
-function LeftMenuHtmlGenerator(){
+function MenuHtmlGenerator(){
 
   this.menuWithoutChildrenTemplate = `
   <li><a page-path="@path" href="#">@name</a></li>
@@ -59,4 +59,4 @@ function LeftMenuHtmlGenerator(){
 if(typeof window._context === 'undefined'){
    window._context = {};
 }
-window._context["LeftMenuHtmlGenerator"] = new LeftMenuHtmlGenerator();
+window._context["MenuHtmlGenerator"] = new MenuHtmlGenerator();
