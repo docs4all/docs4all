@@ -2,6 +2,7 @@ function AppEntryPoint(){
 
   var menuController = window._context["MenuController"];
   var sidebarController = window._context["SidebarController"];
+  var searchController = window._context["SearchController"];
   var apiClient = window._context["ApiClient"];
 
   this.init = async() => {
@@ -9,6 +10,7 @@ function AppEntryPoint(){
     menuController.init();
     sidebarController.init();
     sidebarController.openSidebar();
+    searchController.init();
   }
 
   $( document ).ready(()=> {

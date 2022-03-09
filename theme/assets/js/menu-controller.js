@@ -19,7 +19,7 @@ function MenuController() {
   this.createMenu = async () => {
     var documents = await apiClient.findAll();
     var enhancedMenu = menuEnhancer.plainLisToNestedList(documents);
-    console.log(enhancedMenu);
+    
     var menuString = menuHtmlGenerator.createComplexMenu(enhancedMenu);
     $("#menuContainer").append(menuString)
 

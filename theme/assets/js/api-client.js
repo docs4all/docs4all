@@ -4,7 +4,7 @@ function ApiClient(){
   var database = new loki('database.db');
 
   this.init = () => {
-    console.log("Loading database...");
+    console.log("Loading database");
     return new Promise(function(resolve, reject) {
       $.getJSON("./database.json", function(data) {
         database.loadJSONObject(data);
@@ -22,22 +22,6 @@ function ApiClient(){
     });
   };
 
-  // this.getTreeMenuByAudienceTargetType = () => {
-  //   //add sort param
-  //   var url = `${apiBaseUrl}/api/menu-tree`;
-  //   url = addParam(url, "audienceTarget", "user");
-  //   return new Promise(function(resolve, reject) {
-  //       $.ajax({
-  //         url: url,
-  //         type: "GET",
-  //         dataType: "JSON",
-  //         success: function(data) {
-  //           resolve(data);
-  //         }
-  //       });
-  //   });
-  // };
-
   this.findDocumentByPath = (path) => {
     return new Promise(function(resolve, reject) {
       var query = [
@@ -54,19 +38,20 @@ function ApiClient(){
     });
   };
 
-  this.findDocumentByContent = (resource, text) => {
-    var url = `${apiBaseUrl}/api/${resource}/content`;
+  this.findDocumentByText = (text) => {
     return new Promise(function(resolve, reject) {
-        $.ajax({
-          url: url,
-          type: "POST",
-          data: JSON.stringify({"text":text}),
-          contentType:"application/json; charset=utf-8",
-          dataType: "JSON",
-          success: function(data) {
-            resolve(data);
+      var queryCollection = [
+        {
+          "text": {
+            "$regex": [text,"i"]
           }
-        });
+        }
+      ];
+      var documents = database.getCollection('documents');
+      var results = documents.find({
+        $and: queryCollection
+      });
+      resolve(results);
     });
   };
 
