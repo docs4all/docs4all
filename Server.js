@@ -13,6 +13,7 @@ function Server() {
     var customDocs = false;
     try {
       await fs.promises.access(docsLocation, fs.constants.F_OK)
+      console.log("docs folder was found: "+docsLocation);
       customDocs = true;
     } catch (e) {
       console.log("docs folder was not found. Default docs will be used");
@@ -23,7 +24,7 @@ function Server() {
     if(customDocs===true){
       databaseLocation = path.join(projectBaseLocation, "database.json")
     }else{
-      path.join(projectBaseLocation, "node_modules", "docs4all", "database.json")
+      databaseLocation = path.join(projectBaseLocation, "node_modules", "docs4all", "database.json")
     }
 
     var markdownDataSource = new MarkdownDataSource(databaseLocation);
@@ -34,6 +35,7 @@ function Server() {
     var themeLocation = path.join(projectBaseLocation, "theme")
     try {
       await fs.promises.access(themeLocation, fs.constants.F_OK)
+      console.log("custom theme folder was found: "+themeLocation);
     } catch (e) {
       console.log("theme folder was not found. Default theme will be used");
       themeLocation = path.join(projectBaseLocation, "node_modules", "docs4all", "theme")
@@ -51,6 +53,14 @@ function Server() {
       res.sendFile(databaseLocation);
     });
 
+    app.get('/ui-settings.json', async function(req, res) {
+      try {
+        await fs.promises.access(path.join(projectBaseLocation, "ui-settings.json"), fs.constants.F_OK)
+        res.sendFile(path.join(projectBaseLocation, "ui-settings.json"));
+      } catch (e) {
+        res.json({code:"404", message:"ui-settings.json not found"});
+      }
+    });
 
     app.listen(port, function() {
       console.log('Docs4All app is running on ' + port);

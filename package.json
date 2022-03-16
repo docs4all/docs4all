@@ -8,13 +8,13 @@
   },
   "scripts": {
     "start": "node Index.js start",
-    "dev": "supervisor -e 'md|js|css|js|html|json' -i database.json Index.js",
-    "build": "echo \"build\""
+    "dev": "supervisor -e 'md|js|css|js|html|json' -i database.json Index.js"
   },
   "dependencies": {
     "ejs": "3.0.2",
     "express": "4.17.1",
     "find-package-json": "^1.2.0",
+    "fs-extra": "^10.0.1",
     "lokijs": "^1.5.12",
     "nodemon": "^2.0.15",
     "rimraf": "^3.0.2",

@@ -2,8 +2,29 @@ function ApiClient(){
 
   var apiBaseUrl = getLocationBasePath();
   var database = new loki('database.db');
+  var settings;
 
-  this.init = () => {
+  this.init = async () => {
+    await this.loadDatabase();
+    await this.loadSettings();
+    console.log(settings);
+  }
+
+  this.loadSettings = () => {
+    console.log("Loading settings");
+    return new Promise(function(resolve, reject) {
+      $.getJSON("./ui-settings.json", function(data) {
+        settings = data;
+        resolve()
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.log("settings are not configured");
+        console.log(errorThrown);
+        resolve();
+      });
+    });
+  }
+
+  this.loadDatabase = () => {
     console.log("Loading database");
     return new Promise(function(resolve, reject) {
       $.getJSON("./database.json", function(data) {
@@ -14,6 +35,10 @@ function ApiClient(){
         reject();
       });
     });
+  }
+
+  this.getSettings = () => {
+    return settings;
   }
 
   this.findAll = () => {

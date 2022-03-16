@@ -4,9 +4,11 @@ function AppEntryPoint(){
   var sidebarController = window._context["SidebarController"];
   var searchController = window._context["SearchController"];
   var apiClient = window._context["ApiClient"];
+  var brandingController = window._context["BrandingController"];
 
   this.init = async() => {
     await apiClient.init()
+    brandingController.init();
     menuController.init();
     sidebarController.init();
     sidebarController.openSidebar();
