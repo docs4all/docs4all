@@ -1,17 +1,23 @@
 {
-  "name": "docs4all-ligth",
-  "description": "docs4all-ligth",
+  "name": "docs4all",
+  "description": "docs4all",
+  "version": "1.0.0",
   "main": "index.js",
+  "bin": {
+    "docs4all": "Index.js"
+  },
   "scripts": {
-    "start": "node index.js",
-    "dev": "supervisor -e 'md|js|css|js|html|json' -i theme/database.json index.js",
+    "start": "node Index.js start",
+    "dev": "supervisor -e 'md|js|css|js|html|json' -i database.json Index.js",
     "build": "echo \"build\""
   },
   "dependencies": {
     "ejs": "3.0.2",
     "express": "4.17.1",
+    "find-package-json": "^1.2.0",
     "lokijs": "^1.5.12",
     "nodemon": "^2.0.15",
+    "rimraf": "^3.0.2",
     "supervisor": "^0.12.0"
   }
 }

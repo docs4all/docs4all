@@ -1,12 +1,12 @@
 const fs = require('fs');
 const loki = require('lokijs');
 
-function MarkdownDataSource() {
+function MarkdownDataSource(databaseLocation) {
 
   this.documentsBaseDir;
   var excludeRootDirInPath = true;
   var sequence = 0;
-  this.database = new loki('theme/database.json');
+  this.database = new loki(databaseLocation);
   this.documents = this.database.addCollection('documents');
 
   this.getDocuments = () => {
