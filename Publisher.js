@@ -53,8 +53,8 @@ function Publisher(){
     var uiSettingsLocation = path.join(projectBaseLocation, "ui-settings.json");
     try {
       await fs.promises.access(uiSettingsLocation, fs.constants.F_OK)
-      await copyPromise(uiSettingsLocation, path.join(projectBaseLocation, "site", "ui-settings.json"))    
-      console.log("ui-settings.json was not found");
+      await copyPromise(uiSettingsLocation, path.join(projectBaseLocation, "site", "ui-settings.json"))
+      console.log("ui-settings.json was found");
     } catch (e) {
       console.log("ui-settings.json was not found. Nothing to publish");
       return;

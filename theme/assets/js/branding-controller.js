@@ -19,7 +19,7 @@ function BrandingController(){
     }
 
     if(typeof settings.title !== 'undefined'){
-      document.title = settings.logoText;
+      document.title = settings.title;
     }
   }
 
