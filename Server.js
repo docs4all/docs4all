@@ -6,6 +6,7 @@ var MarkdownDataSource = require('./MarkdownDataSource.js');
 function Server() {
   var app = express();
   var projectBaseLocation = process.env.PWD;
+  const allowed_login_types = ["simple", "microsoft"]
 
   this.start = async (mode) => {
     console.log("Base location: "+projectBaseLocation);
@@ -42,6 +43,37 @@ function Server() {
     }
 
     var port = process.env.PORT || 8080;
+
+    if(process.env.LOGIN_TYPE && process.env.LOGIN_TYPE == "simple"){
+      const DefaultLoginProvider = require('nodeboot-web-security-starter').DefaultLoginProvider;
+      loginProvider = new DefaultLoginProvider({
+        express: app,
+        usersDataSource: {
+          envKey : "USER_"
+        },
+        title: "Docs4ll",
+        signinHtmlTheme : "material"
+      });
+      loginProvider.configure();
+    }else if(process.env.LOGIN_TYPE && process.env.LOGIN_TYPE == "microsoft"){
+      const MicrosoftLoginProvider = require('nodeboot-web-security-starter').MicrosoftLoginProvider;
+      loginProvider = new MicrosoftLoginProvider({
+        express: app,
+        baseUrl: process.env.BASE_URL,
+        usersDataSource: {
+          envKey : "ALLOWED_USERS"
+        },
+        microsoft: {
+          clientId: process.env.LOGIN_OAUTH2_CLIENT_ID,
+          clientSecret: process.env.LOGIN_OAUTH2_CLIENT_SECRET
+        }
+      });
+      loginProvider.configure();
+    }else{
+      console.log("Login type: "+process.env.LOGIN_TYPE);
+      console.log("Login type is not supported. Allowed types: "+allowed_login_types);
+      console.log("Login is disabled");
+    }
 
     app.use("/", express.static(themeLocation));
 

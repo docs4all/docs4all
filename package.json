@@ -16,8 +16,8 @@
     "find-package-json": "^1.2.0",
     "fs-extra": "^10.0.1",
     "lokijs": "^1.5.12",
-    "nodemon": "^2.0.15",
     "rimraf": "^3.0.2",
-    "supervisor": "^0.12.0"
+    "supervisor": "^0.12.0",
+    "nodeboot-web-security-starter": "git+https://github.com/jrichardsz-software-architect-tools/nodeboot-web-security-starter.git"
   }
 }
