@@ -113,7 +113,7 @@ More details here: https://github.com/jrichardsz-software-architect-tools/mkdocs
 ## Road map
 
 - [ ] add unit test and coverage
-- [ ] highlight search results
+- [ ] highlight search results with [Highlight.js](http://highlightjs.org)
 - [ ] docker
 - [ ] minify and optimize javascript files
 - [ ] add login
