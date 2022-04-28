@@ -1,0 +1,23 @@
+{
+  "name": "docs4all",
+  "description": "docs4all",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": {
+    "docs4all": "Index.js"
+  },
+  "scripts": {
+    "start": "node Index.js start",
+    "dev": "nodemon --watch docs -e js,md,html,css --ignore database.json Index.js"
+  },
+  "dependencies": {
+    "ejs": "3.0.2",
+    "express": "4.17.1",
+    "find-package-json": "^1.2.0",
+    "fs-extra": "^10.0.1",
+    "lokijs": "^1.5.12",
+    "nodeboot-web-security-starter": "git+https://github.com/jrichardsz-software-architect-tools/nodeboot-web-security-starter.git",
+    "nodemon": "^2.0.15",
+    "rimraf": "^3.0.2"
+  }
+}
