@@ -4,10 +4,40 @@ const loki = require('lokijs');
 function MarkdownDataSource(databaseLocation) {
 
   this.documentsBaseDir;
+  this.databaseLocation = databaseLocation;
   var excludeRootDirInPath = true;
   var sequence = 0;
-  this.database = new loki(databaseLocation);
-  this.documents = this.database.addCollection('documents');
+
+  this.safeInit = async () => {
+    var existDatabase = false;
+    try {
+      await fs.promises.access(this.databaseLocation, fs.constants.F_OK)
+      existDatabase = true;
+    } catch (e) {
+      if(!e.code ==="ENOENT"){
+        console.log("database.json cannot be accesed");
+        return;
+      }
+      existDatabase = false;
+    }
+    if(existDatabase===true){
+      try {
+        await fs.promises.truncate(this.databaseLocation, 0)
+      } catch (e) {
+        console.log("failed while database.json was being deleting");
+        console.log(e);
+      }
+    }else{
+      try {
+        await fs.promises.writeFile(this.databaseLocation, "{}");
+      } catch (e) {
+        console.log("failed while database.json was being initializing");
+        console.log(e);
+      }
+    }
+    this.database = new loki(this.databaseLocation, { autoload: true });
+    this.documents = this.database.addCollection('documents');
+  };
 
   this.getDocuments = () => {
     return this.database.getCollection('documents');
@@ -26,7 +56,6 @@ function MarkdownDataSource(databaseLocation) {
   };
 
   this.loadDocuments = (dir, parent) => {
-
     if (dir[dir.length - 1] != '/') dir = dir.concat('/')
 
     var fs = fs || require('fs'),

@@ -4,10 +4,11 @@ var MarkdownDataSource = require('./MarkdownDataSource.js');
 
 function Builder(){
   var projectBaseLocation = process.env.PWD;
+  var markdownFolder = process.env.DOCS4ALL_MARKDOWN_FOLDER ||"markdown";
 
   this.start = async () => {
     console.log("Base location: "+projectBaseLocation);
-    var docsLocation = path.join(projectBaseLocation, "docs");
+    var docsLocation = path.join(projectBaseLocation, markdownFolder);
     var customDocs = false;
     try {
       await fs.promises.access(docsLocation, fs.constants.F_OK)
@@ -20,8 +21,21 @@ function Builder(){
       console.log("docs folder was not found. Nothing to publish");
       return;
     }
+    console.log("Markdown location: "+docsLocation);
 
-    var databaseLocation = path.join(projectBaseLocation, "database.json")
+    var databaseLocation;
+    if(customDocs===true){
+      databaseLocation = path.join(projectBaseLocation, "database.json")
+    }else{
+      databaseLocation = path.join(projectBaseLocation, "node_modules", "docs4all", "database.json")
+    }
+
+    var markdownDataSource = new MarkdownDataSource(databaseLocation);
+    await markdownDataSource.safeInit();
+    markdownDataSource.setDocumentsBaseDir(docsLocation);
+    markdownDataSource.loadDocuments(markdownDataSource.getDocumentsBaseDir());
+    await markdownDataSource.save();
+
     try {
       await fs.promises.access(databaseLocation, fs.constants.F_OK)
     } catch (e) {
@@ -29,18 +43,12 @@ function Builder(){
       return;
     }
 
-    var databaseLocation;
-    if(customDocs===true){
-      databaseLocation = path.join(projectBaseLocation, "database.json")
-    }else{
-      path.join(projectBaseLocation, "node_modules", "docs4all", "database.json")
-    }
+    console.log("Database location: "+databaseLocation);
 
-    var markdownDataSource = new MarkdownDataSource(databaseLocation);
-    markdownDataSource.setDocumentsBaseDir(docsLocation);
-    markdownDataSource.loadDocuments(markdownDataSource.getDocumentsBaseDir());
-    markdownDataSource.save();
-
+    //clear filename
+    var databaseAsString = await fs.promises.readFile(databaseLocation, {encoding: "utf8"});
+    var newDatabaseString = databaseAsString.replace(databaseLocation, 'database.json');
+    await fs.promises.writeFile(databaseLocation, newDatabaseString, 'utf8');
   }
 }
 

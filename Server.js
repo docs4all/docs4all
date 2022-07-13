@@ -7,10 +7,11 @@ function Server() {
   var app = express();
   var projectBaseLocation = process.env.PWD;
   const allowed_login_types = ["simple", "microsoft"]
+  var markdownFolder = process.env.DOCS4ALL_MARKDOWN_FOLDER ||"markdown";
 
   this.start = async (mode) => {
     console.log("Base location: "+projectBaseLocation);
-    var docsLocation = path.join(projectBaseLocation, "docs");
+    var docsLocation = path.join(projectBaseLocation, markdownFolder);
     var customDocs = false;
     try {
       await fs.promises.access(docsLocation, fs.constants.F_OK)
@@ -29,6 +30,7 @@ function Server() {
     }
 
     var markdownDataSource = new MarkdownDataSource(databaseLocation);
+    await markdownDataSource.safeInit();
     markdownDataSource.setDocumentsBaseDir(docsLocation);
     markdownDataSource.loadDocuments(markdownDataSource.getDocumentsBaseDir());
     markdownDataSource.save();
