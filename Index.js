@@ -6,7 +6,7 @@ const { commander } = require('commander');
 
 var options;
 
-if(process.env.mode=="server"){
+if(process.env.mode=="start"){
   options = {
     mode:"start"
   }
