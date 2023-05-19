@@ -2,7 +2,8 @@
 const Server = require("./Server.js");
 const Publisher = require("./Publisher.js");
 const Builder = require("./Builder.js");
-const { commander } = require('commander');
+const { Command } = require('commander');
+const program = new Command();
 
 var options;
 
@@ -11,11 +12,17 @@ if(process.env.mode=="start"){
     mode:"start"
   }
 }else{
-  commander
+
+  program
+  .name('docs4all')
+  .description('wiki with infinite menu')
+  .version('1.0.1');
+
+  program
   .requiredOption('-m, --mode <string>', 'start,publish,build')
   .option('-l, --logo <string>', 'a jpg or png, local file')
-  commander.parse();
-  options = commander.opts();
+  program.parse();
+  options = program.opts();
 }
 
 if(options.mode === 'start'){
