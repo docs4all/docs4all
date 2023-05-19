@@ -7,12 +7,11 @@
     "docs4all": "Index.js"
   },
   "scripts": {
-    "start": "cross-env mode=start node Index.js start",
-    "dev": "cross-env mode=start nodemon --watch markdown -e js,md,html,css --ignore database.json Index.js"
+    "start": "node Index.js --mode=start",
+    "dev": "nodemon --watch markdown -e js,md,html,css --ignore database.json Index.js --mode=start"
   },
   "dependencies": {
     "commander": "^10.0.1",
-    "cross-env": "^7.0.3",
     "ejs": "3.0.2",
     "express": "4.17.1",
     "find-package-json": "^1.2.0",
