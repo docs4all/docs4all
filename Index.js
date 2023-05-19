@@ -2,17 +2,31 @@
 const Server = require("./Server.js");
 const Publisher = require("./Publisher.js");
 const Builder = require("./Builder.js");
-var args = process.argv.slice(2);
+const { commander } = require('commander');
 
-if(typeof args[0] === 'undefined' || args[0] === 'start'){
+var options;
+
+if(process.env.mode=="server"){
+  options = {
+    mode:"start"
+  }
+}else{
+  commander
+  .requiredOption('-m, --mode <string>', 'start,publish,build')
+  .option('-l, --logo <string>', 'a jpg or png, local file')
+  commander.parse();
+  options = commander.opts();
+}
+
+if(options.mode === 'start'){
   var server = new Server();
   server.start()
-}else if(args[0] === 'build'){
+}else if(options.mode === 'build'){
   var builder= new Builder();
   builder.start();
-}else if(args[0] === 'publish'){
+}else if(options.mode === 'publish'){
   var publisher= new Publisher();
   publisher.start();
 }else{
-  console.log("Docs4All does not support this argument: "+args[0]);
+  console.log("Docs4All does not support this argument: "+options.mode);
 }

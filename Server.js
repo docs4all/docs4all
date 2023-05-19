@@ -15,11 +15,11 @@ function Server() {
     var customDocs = false;
     try {
       await fs.promises.access(docsLocation, fs.constants.F_OK)
-      console.log("docs folder was found: "+docsLocation);
+      console.log("markdown folder was found: "+docsLocation);
       customDocs = true;
     } catch (e) {
-      console.log("docs folder was not found. Default docs will be used");
-      docsLocation = path.join(projectBaseLocation, "node_modules", "docs4all", "docs")
+      console.log("markdown folder was not found. Default markdown will be used");
+      docsLocation = path.join(projectBaseLocation, "node_modules", "docs4all", markdownFolder)
     }
 
     var databaseLocation;
