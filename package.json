@@ -19,6 +19,7 @@
     "lokijs": "^1.5.12",
     "nodeboot-web-security-starter": "git+https://github.com/jrichardsz-software-architect-tools/nodeboot-web-security-starter.git",
     "nodemon": "^2.0.15",
+    "read-ini-file": "^4.0.0",
     "rimraf": "^3.0.2"
   }
 }

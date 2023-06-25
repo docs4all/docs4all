@@ -10,18 +10,73 @@ function ApiClient(){
     console.log(settings);
   }
 
-  this.loadSettings = () => {
-    console.log("Loading settings");
-    return new Promise(function(resolve, reject) {
-      $.getJSON("./ui-settings.json", function(data) {
-        settings = data;
-        resolve()
-      }).fail(function(jqXHR, textStatus, errorThrown) {
-        console.log("settings are not configured");
-        console.log(errorThrown);
-        resolve();
-      });
+  function parseIniString(data){
+    var regex = {
+        section: /^\s*\[\s*([^\]]*)\s*\]\s*$/,
+        param: /^\s*([^=]+?)\s*=\s*(.*?)\s*$/,
+        comment: /^\s*;.*$/
+    };
+    var value = {};
+    var lines = data.split(/[\r\n]+/);
+    var section = null;
+    lines.forEach(function(line){
+        if(regex.comment.test(line)){
+            return;
+        }else if(regex.param.test(line)){
+            var match = line.match(regex.param);
+            if(section){
+                value[section][match[1]] = match[2];
+            }else{
+                value[match[1]] = match[2];
+            }
+        }else if(regex.section.test(line)){
+            var match = line.match(regex.section);
+            value[match[1]] = {};
+            section = match[1];
+        }else if(line.length == 0 && section){
+            section = null;
+        };
     });
+    return value;
+}
+
+
+  this.loadSettings = async() => {
+    console.log("Loading settings");
+
+    var iniResponse = await fetch('./settings.ini');
+    try{
+      initialSettings = parseIniString(await iniResponse.text());
+      settings = {
+        ...initialSettings,
+        getProperty: function(key) {
+          try {
+              return key.split(".").reduce((result, key) => {
+                  return result[key]
+              }, this);
+          } catch (err) {
+              console.log(key + " cannot be retrieved from settings")
+          }
+        },
+        hasProperty: function(key) {
+          try {
+              var value = key.split(".").reduce((result, key) => {
+                  return result[key]
+              }, this);
+              return (typeof value !== 'undefined')
+          } catch (err) {
+              return false;
+          }
+        }         
+      }
+
+
+
+    }catch(err){
+      console.error("Failed while ./settings.ini was being reading")
+      console.error(err)
+      settings = {};
+    }
   }
 
   this.loadDatabase = () => {

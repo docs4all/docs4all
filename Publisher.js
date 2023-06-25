@@ -52,13 +52,23 @@ function Publisher(){
     await copyPromise(themeLocation, path.join(projectBaseLocation, siteFolder))
     await copyPromise(databaseLocation, path.join(projectBaseLocation, siteFolder, "database.json"))
 
-    var uiSettingsLocation = path.join(projectBaseLocation, "ui-settings.json");
+    var settingsLocation = path.join(projectBaseLocation, "settings.ini");
     try {
-      await fs.promises.access(uiSettingsLocation, fs.constants.F_OK)
-      await copyPromise(uiSettingsLocation, path.join(projectBaseLocation, siteFolder, "ui-settings.json"))
-      console.log("ui-settings.json location: "+uiSettingsLocation);
+      await fs.promises.access(settingsLocation, fs.constants.F_OK)
+      await copyPromise(settingsLocation, path.join(projectBaseLocation, siteFolder, "settings.ini"))
+      console.log("settings.ini location: "+settingsLocation);
     } catch (e) {
-      console.log("ui-settings.json was not found. Nothing to publish");
+      console.log("settings.ini was not found. Nothing to publish");
+      return;
+    }
+
+    var logoLocation = path.join(projectBaseLocation, "bootstraper-logo.png");
+    try {
+      await fs.promises.access(logoLocation, fs.constants.F_OK)
+      await copyPromise(logoLocation, path.join(projectBaseLocation, siteFolder,"theme" , "assets", "img", "bootstraper-logo.png"))
+      console.log("bootstraper-logo.png was update");
+    } catch (e) {
+      console.log("bootstraper-logo.png was not found. Nothing to publish");
       return;
     }
 

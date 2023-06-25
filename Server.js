@@ -1,7 +1,8 @@
-var express = require('express');
-var path = require('path');
+const express = require('express');
+const path = require('path');
 const fs = require('fs');
 var MarkdownDataSource = require('./MarkdownDataSource.js');
+var Common = require("./Common.js");
 
 function Server() {
   var app = express();
@@ -11,37 +12,47 @@ function Server() {
 
   this.start = async (mode) => {
     console.log("Base location: "+projectBaseLocation);
-    var docsLocation = path.join(projectBaseLocation, markdownFolder);
-    var customDocs = false;
-    try {
-      await fs.promises.access(docsLocation, fs.constants.F_OK)
-      console.log("markdown folder was found: "+docsLocation);
-      customDocs = true;
-    } catch (e) {
-      console.log("markdown folder was not found. Default markdown will be used");
-      docsLocation = path.join(projectBaseLocation, "node_modules", "docs4all", markdownFolder)
-    }
-
+    var isRunningFromWithinDocs4All = await Common.isRunningFromWithinDocs4All();
+    var expectedMarkdownLocation = path.join(projectBaseLocation, markdownFolder);
     var databaseLocation;
-    if(customDocs===true){
+
+    if(await Common.fileExist(expectedMarkdownLocation)){
+      markdownLocation = expectedMarkdownLocation;
+      console.log("markdown folder was found: "+markdownLocation);
+      //since user has created their own markdown files, we need to scan the folder
+      //and subfolder to create a flat data to be used in the left menu 
       databaseLocation = path.join(projectBaseLocation, "database.json")
+      var markdownDataSource = new MarkdownDataSource(databaseLocation);
+      await markdownDataSource.safeInit();
+      markdownDataSource.setDocumentsBaseDir(markdownLocation);
+      markdownDataSource.loadDocuments(markdownDataSource.getDocumentsBaseDir());
+      markdownDataSource.save();
+      //if everything is ok, databaseLocation should contain a json file
     }else{
-      databaseLocation = path.join(projectBaseLocation, "node_modules", "docs4all", "database.json")
+    
+      if(isRunningFromWithinDocs4All){
+        //pre build database will be used
+        databaseLocation = path.join(projectBaseLocation, "database.json");                        
+      }else{
+        databaseLocation = path.join(projectBaseLocation, "node_modules", "docs4all", "database.json");        
+      }
+      console.log("markdown folder was not found. Default database will be used: "+databaseLocation); 
     }
 
-    var markdownDataSource = new MarkdownDataSource(databaseLocation);
-    await markdownDataSource.safeInit();
-    markdownDataSource.setDocumentsBaseDir(docsLocation);
-    markdownDataSource.loadDocuments(markdownDataSource.getDocumentsBaseDir());
-    markdownDataSource.save();
+    var themeLocation;    
 
-    var themeLocation = path.join(projectBaseLocation, "theme")
-    try {
-      await fs.promises.access(themeLocation, fs.constants.F_OK)
-      console.log("custom theme folder was found: "+themeLocation);
-    } catch (e) {
-      console.log("theme folder was not found. Default theme will be used");
-      themeLocation = path.join(projectBaseLocation, "node_modules", "docs4all", "theme")
+    if(isRunningFromWithinDocs4All){
+      themeLocation = path.join(projectBaseLocation, "theme");
+      console.log("default theme folder will be used: "+themeLocation);
+    }else{
+      var customThemeLocation = path.join(projectBaseLocation, "theme");
+      if(await Common.fileExist(customThemeLocation)){
+        themeLocation = customThemeLocation;
+        console.log("custom theme folder was found: "+themeLocation);     
+      }else{
+        themeLocation = path.join(projectBaseLocation, "node_modules", "docs4all", "theme");
+        console.log("default theme folder will be used: "+themeLocation);
+      }  
     }
 
     var port = process.env.PORT || 8080;
@@ -77,6 +88,16 @@ function Server() {
       console.log("Login is disabled");
     }
 
+    var customImageLogoFile = path.join(projectBaseLocation, "bootstraper-logo.png");      
+    if(await Common.fileExist(customImageLogoFile)){    
+      console.log("custom image logo was found:"+customImageLogoFile);    
+      app.get('/assets/img/bootstraper-logo.png', function(req, res) {
+        res.sendFile(customImageLogoFile);
+      });
+    }else{
+      console.log("custom image logo was not found");     
+    }
+
     app.use("/", express.static(themeLocation));
 
     app.get('/', function(req, res) {
@@ -87,14 +108,14 @@ function Server() {
       res.sendFile(databaseLocation);
     });
 
-    app.get('/ui-settings.json', async function(req, res) {
+    app.get('/settings.ini', async function(req, res) {
       try {
-        await fs.promises.access(path.join(projectBaseLocation, "ui-settings.json"), fs.constants.F_OK)
-        res.sendFile(path.join(projectBaseLocation, "ui-settings.json"));
+        await fs.promises.access(path.join(projectBaseLocation, "settings.ini"), fs.constants.F_OK)
+        res.sendFile(path.join(projectBaseLocation, "settings.ini"));
       } catch (e) {
-        res.json({code:"404", message:"ui-settings.json not found"});
+        res.json({code:"404", message:"settings.ini was not found"});
       }
-    });
+    });    
 
     app.listen(port, function() {
       console.log('Docs4All app is running on ' + port);

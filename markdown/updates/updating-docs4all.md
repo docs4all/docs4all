@@ -1,8 +1,8 @@
 /*
-Title: Updating docs4all-ligth
+Title: Updating docs4all
 */
 
-The update process for docs4all-ligth is as follows:
+The update process for docs4all is as follows:
 
 1. Make a backup of your `content` folder and your `config.js` outside of your project.
 
@@ -10,9 +10,9 @@ The update process for docs4all-ligth is as follows:
    - the `themes/default/` folder
    - any edited files in the `public` folder
 
-1. Download the latest version of docs4all-ligth from the [releases page](https://github.com/docs4all/docs4all-ligth/releases).
+1. Download the latest version of docs4all from the [releases page](https://github.com/docs4all/docs4all/releases).
 
-1. Extract the docs4all-ligth archive to your project folder, replacing all existing files in your existing docs4all-ligth install.
+1. Extract the docs4all archive to your project folder, replacing all existing files in your existing docs4all install.
 
 1. Copy your `content` folder and `config.js` file from your backup location back into the install location.
 
@@ -30,4 +30,4 @@ The update process for docs4all-ligth is as follows:
    npm start
    ```
 
-You are running the lastest version of docs4all-ligth.
+You are running the lastest version of docs4all.

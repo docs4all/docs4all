@@ -5,5 +5,6 @@
 }
 -->
 
-Using docs4all-ligth in the wild? We'd love to see it.  
-Add your site to the [docs4all-ligth Showcase](https://github.com/docs4all/docs4all-ligth/wiki/docs4all-ligth-Showcase).
+Using docs4all in the wild? We'd love to see it.  
+
+Share us [here](https://github.com/docs4all/docs4all/issues) the name, screenshot and url of your site

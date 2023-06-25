@@ -3,7 +3,7 @@ Title: Creating Pages
 Sort: 2
 */
 
-Creating pages in docs4all-ligth is as simple as creating a Markdown file (`.md`) with you favourite text editor.
+Creating pages in docs4all is as simple as creating a Markdown file (`.md`) with you favourite text editor.
 There are several important aspects to your files that you need to pay attention to when you create pages.
 
 ## File Location
@@ -14,7 +14,7 @@ configured in `config.js`). You can add as many sub-folders as you like in the c
 
 You can use sub-folders as a way of creating "categories" of pages. For example if you create a sub-folder
 called `using-my-product` all of the pages inside that folder will appear under the **Using My Product**
-category in docs4all-ligth. You can create as many levels of sub-folder as you like but they will always appear
+category in docs4all. You can create as many levels of sub-folder as you like but they will always appear
 as a top level category.
 
 Sub-folders will also be added to the page URL or "slug". See file naming below for more information.
@@ -23,7 +23,7 @@ Sub-folders will also be added to the page URL or "slug". See file naming below 
 
 The name of the file defines what URL or "slug" is used to navigate to that page. For example if you create
 a file called `my-example-page.md` you would visit that page be navigation to `example.com/my-example-page`.
-Below is a table of example folder and file names and the URL's they would have in docs4all-ligth.
+Below is a table of example folder and file names and the URL's they would have in docs4all.
 
 File Location | URL
 ------------- | -------------
@@ -52,7 +52,7 @@ optional.
 Note that if no meta title is specified the filename will be used to generate a page title.
 
 You can also use certain variables in your Markdown pages which will be replaced with the values
-you set in [your config](%base_url%/usage/configuration).
+you set in [your config](./usage/configuration).
 
 * *&#37;base_url&#37;*: The base URL of your site
 * *&#37;image_url&#37;*: The base URL of your images folder (`public/images`)

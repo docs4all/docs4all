@@ -1,19 +1,37 @@
-/*
-Title: Installing docs4all-ligth
-Sort: 2
-*/
 
-Make sure you have met the [minimum requirements](%base_url%/install/requirements) then install
-docs4all-ligth:
+Make sure you have met the [minimum requirements](./install/requirements) then install
+docs4all:
 
-**Note:** It is recommended to create a new Git repository to store your documentation files and then install docs4all-ligth as a dependency into it. See the [example directory](https://github.com/docs4all/docs4all-ligth/tree/master/example) to see how this is done.
+**Note:** It is recommended to create a new Git repository to store your documentation files.
 
-1. Switch to your existing or new project directory.
-2. Add docs4all-ligth to your project via NPM's package.json file or downloading the latest version from the [releases page](https://github.com/docs4all/docs4all-ligth/releases)
-3. In a terminal, run `npm install` to install the node dependencies
-4. To start docs4all-ligth, run `npm start` (or `npm run start_win` on Windows)
-5. Visit `http://localhost:3000` in your web browser
+## Demo (with nodejs)
 
-You can now start [creating pages](%base_url%/usage/creating-pages).
+- clone the template: https://github.com/docs4all/docs4all-demo
+- add your own files in **markdown** folder
+- for developers
 
-**NOTE:** See the [Production Notes](%base_url%/install/production-notes) when installing for a live site.
+```
+npm install
+npm run dev
+```
+
+- for production with node
+
+```
+npm install
+npm run start
+```
+
+## Demo (static web)
+
+- clone the template: https://github.com/docs4all/docs4all-demo
+- add your own files in markdown folder
+- execute
+
+```
+npm install
+npm run build
+npm run publish
+```
+
+- this will create a **site** folder with the static files ready to deploy on any http server

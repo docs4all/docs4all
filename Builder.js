@@ -18,7 +18,7 @@ function Builder(){
       customDocs = false;
     }
     if(customDocs===false){
-      console.log("docs folder was not found. Nothing to publish");
+      console.log("markdown folder was not found. Nothing to publish");
       return;
     }
     console.log("Markdown location: "+docsLocation);

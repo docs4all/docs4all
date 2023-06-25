@@ -1,22 +1,22 @@
 /*
-Title: Deploying docs4all-ligth to Heroku
+Title: Deploying docs4all to Heroku
 Sort: 1
 */
 
 [Heroku](https://www.heroku.com) is a cloud hosting platform which allows you to host your code.
-In this tutorial we are going to use Heroku to host our docs4all-ligth Knowledgebase on the [free 1 dyno plan](https://www.heroku.com/pricing).
+In this tutorial we are going to use Heroku to host our docs4all Knowledgebase on the [free 1 dyno plan](https://www.heroku.com/pricing).
 
 ## Prerequisites
 
 Before we get going there are a few things we need to make sure we have in place first:
 
-1. We are going to assume you have already [installed](%base_url%/install/installing-docs4all-ligth) and set up docs4all-ligth on your local machine
+1. We are going to assume you have already [installed](./install/installing-docs4all) and set up docs4all on your local machine
 2. You are going to need a free [Heroku user account](https://signup.heroku.com/signup)
 3. You will also need to have the [Heroku Toolbelt](https://toolbelt.heroku.com) installed
 
 ## Login to Heroku
 
-First you need to open a command shell in the root of your docs4all-ligth install. You then need to login to Heroku
+First you need to open a command shell in the root of your docs4all install. You then need to login to Heroku
 using the `heroku login` command. You will be asked to setup some `ssh` keys if you haven't done so already.
 Just follow the instructions.
 
@@ -29,23 +29,23 @@ Just follow the instructions.
     Generating new SSH public key.
     Uploading ssh public key /Users/adam/.ssh/id_rsa.pub
 
-## Clone docs4all-ligth and make edits
+## Clone docs4all and make edits
 
 Heroku works by deploying a Git repository to their servers.  
-So we need to make your docs4all-ligth install is a Git repository.  
+So we need to make your docs4all install is a Git repository.  
 This also means you will need to commit any changes you make to Git before deploying them to Heroku.  
 Thankfully this is easy to setup:  
 
-    $ git clone https://github.com/docs4all/docs4all-ligth.git
-    $ cd docs4all-ligth/
+    $ git clone https://github.com/docs4all/docs4all.git
+    $ cd docs4all/
     [NOW EDIT FILES IN content/]
     $ git add content/
     $ git commit -m "My Changes"
 
 Remember you will need to `git commit` any future changes you make before deployment.  
-**NOTE: In the near future, we will isolate docs4all-ligth code from your documentation content (coming soon)**
+**NOTE: In the near future, we will isolate docs4all code from your documentation content (coming soon)**
 
-## Deploy docs4all-ligth to Heroku
+## Deploy docs4all to Heroku
 
 First we need to create the app in Heroku by running:
 
@@ -61,14 +61,14 @@ Next we need to "push" our Git repository to Heroku by running:
     $ git push heroku master
 
 You should see Heroku do a bunch of stuff and successfully deploy your app. Note that you will need to run the
-`git push heroku master` command after your commit changes every time you want to publish your docs4all-ligth site.
+`git push heroku master` command after your commit changes every time you want to publish your docs4all site.
 
 Finally we just need to make sure that we have one dyno running our `web` process. This command only
 needs to be run this one time.
 
     $ heroku ps:scale web=1
 
-You can now visit your live docs4all-ligth install in the browser by running the `heroku open` command.
+You can now visit your live docs4all install in the browser by running the `heroku open` command.
 
     $ heroku open
     Opening sharp-rain-871... done

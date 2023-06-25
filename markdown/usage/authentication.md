@@ -5,7 +5,7 @@ Sort: 1
 
 ## Authentication
 
-To enable basic Authentication in docs4all-ligth is very simple.
+To enable basic Authentication in docs4all is very simple.
 
 In `config.js`
 

@@ -3,13 +3,13 @@ Title: Configuration
 Sort: 1
 */
 
-To edit the configuration of docs4all-ligth you need to edit `config.js` in the root directory.
+To edit the configuration of docs4all you need to edit `config.js` in the root directory.
 It should contain config variables like:
 
 ```
 // Your site title (format: page_title - site_title)
 site_title: 'Example Site',
-// The base URL of your site (can use %base_url% in Markdown files)
+// The base URL of your site (can use . in Markdown files)
 base_url: '',
 // Used for the "Get in touch" page footer link
 support_email: 'support@example.com',

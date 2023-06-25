@@ -3,4 +3,4 @@ Title: Deleting Pages
 Sort: 3
 */
 
-Deleting pages in docs4all-ligth is as simple as deleting the Markdown file (`.md`) from the content folder.
+Deleting pages in docs4all is as simple as deleting the Markdown file (`.md`) from the content folder.

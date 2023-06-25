@@ -4,17 +4,17 @@ Sort: 3
 */
 
 ## TL;DR
-[docs4all-ligth](http://docs4all-ligth.com/) allows only basic username/password authentication, so I added Google OAuth support. This option can be turned on by setting the `googleoauth` option in the `config.default.js` file to `true`, and by supplying the OAuth config object as outlined in the guides below. Additionally, you can allow only emails from the certain domain to use the service with one config setting.
+[docs4all](http://docs4all.com/) allows only basic username/password authentication, so I added Google OAuth support. This option can be turned on by setting the `googleoauth` option in the `config.default.js` file to `true`, and by supplying the OAuth config object as outlined in the guides below. Additionally, you can allow only emails from the certain domain to use the service with one config setting.
 
-The basic idea was taken from the [Google Cloud Platform Node.js guide](https://github.com/GoogleCloudPlatform/nodejs-getting-started/tree/master/4-auth).
+The basic idea was taken from the [Google Cloud Platform Node.js guide](https://github.com/GoogleCloudPlatform/nodejs-getting-started/tree/main/4-auth).
 
-This has been submitted as a [pull request]() on the official docs4all-ligth Github repository. This is my way of saying thanks to an awesome author of docs4all-ligth.
+This has been submitted as a [pull request]() on the official docs4all Github repository. This is my way of saying thanks to an awesome author of docs4all.
 
 ## Steps on how to reproduce this on fresh copy
-Below are the steps one needs to take to get this working on a fresh copy of docs4all-ligth. In case this won't make it to the official repo, you can clone my fork [here](https://github.com/Hitman666/docs4all-ligth). Just make sure you set your Google OAuth credentials properly (more about this in the **X** section).
+Below are the steps one needs to take to get this working on a fresh copy of docs4all. In case this won't make it to the official repo, you can clone my fork [here](https://github.com/Hitman666/docs4all). Just make sure you set your Google OAuth credentials properly (more about this in the **X** section).
 
 ### Install packages via npm
-_Make sure you first [install docs4all-ligth dependencies](http://docs.docs4all-ligth.com/install/installing-docs4all-ligth) after you clone it._
+_Make sure you first [install docs4all dependencies](http://docs.docs4all.com/install/installing-docs4all) after you clone it._
 
 Install the following packages:
 
@@ -23,7 +23,7 @@ Install the following packages:
 
 ### Editing the `app/index.js` file
 
-+ Add passport: `var passport=require('passport');` just after docs4all-ligth is required.
++ Add passport: `var passport=require('passport');` just after docs4all is required.
 + Add oauth2 middleware: `var oauth2= require('./middleware/oauth2.js');` in the config block, just afer `error_handler.js` middleware.
 + Change `secret` to `secret:config.secret,` in the `// HTTP Authentication` section.
 + >>> Remove the rn-login route `app.post('/rn-login', route_login);`
@@ -118,7 +118,7 @@ Create a new file `oauth2.js` in the `app/middleware` folder with the following 
 'use strict';
 
 var express = require('express');
-var debug = require('debug')('docs4all-ligth');
+var debug = require('debug')('docs4all');
 
 // [START setup]
 var passport = require('passport');
@@ -335,7 +335,7 @@ Replace the login form with:
 {{/config.googleoauth}}
 ```
 
-We added two scenarios for when we have Google OAuth enabled (`config.googleoauth`) and when we don't (defaulting to the current docs4all-ligth behavior).
+We added two scenarios for when we have Google OAuth enabled (`config.googleoauth`) and when we don't (defaulting to the current docs4all behavior).
 
 ### Editing the `themes/default/templates/login.html` file
 Add zocial reference:
@@ -366,7 +366,7 @@ Replace the whole `form-bottom` classed div with the following code:
 </div>
 ```
 
-Same thing here as well. If we have Google OAuth enabled (`config.googleoauth`) then we show the new Google login button and hide the rest. Otherwise, we default it to the current docs4all-ligth behavior.
+Same thing here as well. If we have Google OAuth enabled (`config.googleoauth`) then we show the new Google login button and hide the rest. Otherwise, we default it to the current docs4all behavior.
 
 ## Testing
 Congratulations, you're done! Now, to test this locally just run the `npm start` from the root of your project and go to `http://localhost:3000` and you should see this:

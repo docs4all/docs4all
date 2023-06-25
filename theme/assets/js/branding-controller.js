@@ -5,21 +5,20 @@ function BrandingController(){
   this.init = () => {
     console.log("Customizing...");
     var settings = this.apiClient.getSettings();
-    if(typeof settings === 'undefined'){
-      $('#sidebar-header').prepend('<img src="assets/img/bootstraper-logo.png" alt="bootraper logo" class="app-logo">')
-      return;
-    }
-
-    if(typeof settings.logoImageUrl !== 'undefined'){
-      $('#sidebar-header').prepend('<img src="'+settings.logoImageUrl+'" alt="bootraper logo" class="app-logo">')
-    }else if(typeof settings.logoText !== 'undefined'){
-      $('#sidebar-header').prepend('<h1>'+settings.logoText+'</h1>')
+    if(settings.hasProperty("branding.logo_type")){      
+      if(settings.hasProperty("branding.logo_value")){
+        if(settings.getProperty("branding.logo_type") === "text"){
+          $('#sidebar-header').prepend('<h1>'+settings.getProperty("branding.logo_value")+'</h1>');
+        }else if(settings.getProperty("branding.logo_type") === "image_from_url"){
+          $('#sidebar-header').prepend('<img src="'+settings.getProperty("branding.logo_value")+'" alt="logo" class="app-logo">')
+        }
+      }    
     }else{
-      $('#sidebar-header').prepend('<img src="assets/img/bootstraper-logo.png" alt="bootraper logo" class="app-logo">')
+      $('#sidebar-header').prepend('<img src="./assets/img/bootstraper-logo.png" alt="logo" class="app-logo">')      
     }
 
-    if(typeof settings.title !== 'undefined'){
-      document.title = settings.title;
+    if(settings.hasProperty("branding.web_title")){
+      document.title = settings.getProperty("branding.web_title");
     }
   }
 
