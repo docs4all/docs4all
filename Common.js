@@ -14,7 +14,7 @@ Common.fileExist = async function (absoluteFileLocation) {
 
 Common.isRunningFromWithinDocs4All = async function () {
   try {
-    var f = finder(__dirname);
+    var f = finder(process.env.PWD);
     return f.next().value.name === "docs4all"
   } catch (e) {
     return false;

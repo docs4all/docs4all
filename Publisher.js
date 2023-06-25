@@ -3,49 +3,21 @@ var util = require("util");
 var fs = require("fs");
 var fsExtra = require("fs-extra");
 var path = require("path");
+const Builder = require("./Builder.js");
+var Common = require("./Common.js");
 const rimrafPromise = util.promisify(rimraf);
 const mkdirPromise = util.promisify(fs.mkdir);
 const copyPromise = util.promisify(fsExtra.copy);
 
 function Publisher(){
   var projectBaseLocation = process.env.PWD;
-  var markdownFolder = process.env.DOCS4ALL_MARKDOWN_FOLDER ||"markdown";
   var siteFolder = process.env.DOCS4ALL_SITE_FOLDER ||"site";
 
   this.start = async () => {
-    console.log("Base location: "+projectBaseLocation);
-    var docsLocation = path.join(projectBaseLocation, markdownFolder);
-    var customDocs = false;
-    try {
-      await fs.promises.access(docsLocation, fs.constants.F_OK)
-      customDocs = true;
-    } catch (e) {
-      console.log(e);
-      customDocs = false;
-    }
-    if(customDocs===false){
-      console.log("markdown folder was not found. Nothing to publish");
-      return;
-    }
-    console.log("Markdown location: "+docsLocation);
-
-    var themeLocation = path.join(projectBaseLocation, "theme")
-    try {
-      await fs.promises.access(themeLocation, fs.constants.F_OK)
-      console.log("custom theme folder was found: "+themeLocation);
-    } catch (e) {
-      console.log("custom theme folder was not found. Default theme will be used");
-      themeLocation = path.join(__dirname,"theme")
-    }
-
-    var databaseLocation = path.join(projectBaseLocation, "database.json")
-    try {
-      await fs.promises.access(databaseLocation, fs.constants.F_OK)
-    } catch (e) {
-      console.log("database.json was not found. Nothing to publish");
-      return;
-    }
-    console.log("Database location: "+databaseLocation);
+    var builder = new Builder();
+    var builderResponse = await builder.start();
+    var databaseLocation = builderResponse.databaseLocation;
+    var themeLocation = builderResponse.themeLocation;    
 
     await rimrafPromise(path.join(projectBaseLocation, siteFolder))
     await mkdirPromise(path.join(projectBaseLocation, siteFolder))
@@ -53,25 +25,18 @@ function Publisher(){
     await copyPromise(databaseLocation, path.join(projectBaseLocation, siteFolder, "database.json"))
 
     var settingsLocation = path.join(projectBaseLocation, "settings.ini");
-    try {
-      await fs.promises.access(settingsLocation, fs.constants.F_OK)
-      await copyPromise(settingsLocation, path.join(projectBaseLocation, siteFolder, "settings.ini"))
-      console.log("settings.ini location: "+settingsLocation);
-    } catch (e) {
-      console.log("settings.ini was not found. Nothing to publish");
-      return;
-    }
+    if(await Common.fileExist(settingsLocation)){
+      var finalSettingsLocation = path.join(projectBaseLocation, siteFolder, "settings.ini");
+      await copyPromise(settingsLocation, finalSettingsLocation)
+      console.log("settings.ini was published: "+finalSettingsLocation);
+    }    
 
-    var logoLocation = path.join(projectBaseLocation, "bootstraper-logo.png");
-    try {
-      await fs.promises.access(logoLocation, fs.constants.F_OK)
-      await copyPromise(logoLocation, path.join(projectBaseLocation, siteFolder,"theme" , "assets", "img", "bootstraper-logo.png"))
-      console.log("bootstraper-logo.png was update");
-    } catch (e) {
-      console.log("bootstraper-logo.png was not found. Nothing to publish");
-      return;
+    var logoFileLocation = path.join(projectBaseLocation, "bootstraper-logo.png");
+    if(await Common.fileExist(logoFileLocation)){
+      var finalLogoLocation = path.join(projectBaseLocation, siteFolder,"theme" , "assets", "img", "bootstraper-logo.png");
+      await copyPromise(logoLocation, finalLogoLocation)
+      console.log("bootstraper-logo.png was published: "+finalLogoLocation);
     }
-
   }
 }
 

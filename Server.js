@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-var MarkdownDataSource = require('./MarkdownDataSource.js');
+const Builder = require("./Builder.js");
 var Common = require("./Common.js");
 
 function Server() {
@@ -11,49 +11,11 @@ function Server() {
   var markdownFolder = process.env.DOCS4ALL_MARKDOWN_FOLDER ||"markdown";
 
   this.start = async (mode) => {
-    console.log("Base location: "+projectBaseLocation);
-    var isRunningFromWithinDocs4All = await Common.isRunningFromWithinDocs4All();
-    var expectedMarkdownLocation = path.join(projectBaseLocation, markdownFolder);
-    var databaseLocation;
-
-    if(await Common.fileExist(expectedMarkdownLocation)){
-      markdownLocation = expectedMarkdownLocation;
-      console.log("markdown folder was found: "+markdownLocation);
-      //since user has created their own markdown files, we need to scan the folder
-      //and subfolder to create a flat data to be used in the left menu 
-      databaseLocation = path.join(projectBaseLocation, "database.json")
-      var markdownDataSource = new MarkdownDataSource(databaseLocation);
-      await markdownDataSource.safeInit();
-      markdownDataSource.setDocumentsBaseDir(markdownLocation);
-      markdownDataSource.loadDocuments(markdownDataSource.getDocumentsBaseDir());
-      markdownDataSource.save();
-      //if everything is ok, databaseLocation should contain a json file
-    }else{
     
-      if(isRunningFromWithinDocs4All){
-        //pre build database will be used
-        databaseLocation = path.join(projectBaseLocation, "database.json");                        
-      }else{
-        databaseLocation = path.join(projectBaseLocation, "node_modules", "docs4all", "database.json");        
-      }
-      console.log("markdown folder was not found. Default database will be used: "+databaseLocation); 
-    }
-
-    var themeLocation;    
-
-    if(isRunningFromWithinDocs4All){
-      themeLocation = path.join(projectBaseLocation, "theme");
-      console.log("default theme folder will be used: "+themeLocation);
-    }else{
-      var customThemeLocation = path.join(projectBaseLocation, "theme");
-      if(await Common.fileExist(customThemeLocation)){
-        themeLocation = customThemeLocation;
-        console.log("custom theme folder was found: "+themeLocation);     
-      }else{
-        themeLocation = path.join(projectBaseLocation, "node_modules", "docs4all", "theme");
-        console.log("default theme folder will be used: "+themeLocation);
-      }  
-    }
+    var builder = new Builder();
+    var builderResponse = await builder.start();
+    var databaseLocation = builderResponse.databaseLocation;
+    var themeLocation = builderResponse.themeLocation;
 
     var port = process.env.PORT || 8080;
 

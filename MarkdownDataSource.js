@@ -256,18 +256,6 @@ function MarkdownDataSource(databaseLocation) {
     }
   }
 
-  this.getMetaForDirectoryIfExist = (file) => {
-    try {
-      if (fs.existsSync(file + "/meta.json")) {
-        var contents = fs.readFileSync(file + "/meta.json", 'utf8');
-        return JSON.parse(contents);
-      }
-    } catch (e) {
-      console.log(`meta has an error :${file}, ${e}`);
-      return;
-    }
-  }
-
   this.getMetaForMarkdownIfExist = (file) => {
     try {
       var contents = fs.readFileSync(file, 'utf8');

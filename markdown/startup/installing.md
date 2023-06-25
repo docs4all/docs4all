@@ -1,3 +1,10 @@
+<!--
+{
+  "order":2,
+  "title": "Startup"
+}
+-->
+
 
 Make sure you have met the [minimum requirements](./install/requirements) then install
 docs4all:

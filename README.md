@@ -27,6 +27,8 @@ npm install
 npm run start
 ```
 
+Open `http://localhost:8080`
+
 ## Demo (static web)
 
 - clone the template: https://github.com/docs4all/docs4all-demo
@@ -41,35 +43,38 @@ npm run publish
 
 - this will create a **site** folder with the static files ready to deploy on any http server
 
-## home
+## Home Page
 
 ![](https://i.ibb.co/80qzMpN/docs4all-home.png)  
 
-## customize
+## Customize
 
+To customize, create a settings.ini file at the workspace root with the following values
+
+**Text instead image logo**
+
+```ini
 [branding]
 logo_type = text
-logo_value = Hello
+logo_value = My Wiki
+```
 
+**Url image instead the default**
+
+```ini
 [branding]
 logo_type = image_from_url
 logo_value = https://i.ibb.co/b2YYwYn/bootstraper-logo.png
+```
 
+**variable instead repetitive values in your markdown**
+
+```ini
 [variables]
 best_language = Java
-
-At this moment, just logo and title customizations are available.
-
-To do that just add this json : ui-settings.json
-
-```
-{
-  "logoText":"My markdown",
-  "title":"My markdown"
-}
 ```
 
-Use **logoImageUrl** with a valid image url instead **logoText** if you wish
+Then in your markdown file, use `{{best_language}}`
 
 ## Home page
 
@@ -129,17 +134,17 @@ export ALLOWED_USERS="jane_doe@microsoft.com,kurt_weller@hotmail.com"
 
 More details here: https://github.com/jrichardsz-software-architect-tools/mkdocs-mod-template/wiki/Add-microsoft-login
 
-### Custom markdown folder
+## Custom markdown folder
 
-Just export these variables before the start
+To override the default **markdown** folder, just export this variable before the start
 
 ```
-export DOCS4ALL_MARKDOWN_FOLDER=my-awesome-markdown
+export DOCS4ALL_MARKDOWN_FOLDER=docs
 ```
 
-### Custom site folder
+## Custom site folder
 
-Just export these variables before publish it. For example github pages only allow **markdown** folder for static site
+To override the default **site** folder, just export this variable before publish it.
 
 ```
 export DOCS4ALL_SITE_FOLDER=my-awesome-site
@@ -155,8 +160,9 @@ export DOCS4ALL_SITE_FOLDER=my-awesome-site
 - [ ] highlight search results with [Highlight.js](http://highlightjs.org)
 - [ ] docker
 - [ ] minify and optimize javascript files
-- [ ] add login
-- [ ] customize raneto markdown
+- [ ] add google login
+- [ ] more documentation
+- [ ] add video tutorials
 - [ ] publish to npm repository: https://www.npmjs.com/package/repository
 
 ## Technologies and Inspiration

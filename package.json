@@ -8,7 +8,9 @@
   },
   "scripts": {
     "start": "node Index.js --mode=start",
-    "dev": "nodemon --watch markdown -e js,md,html,css --ignore database.json Index.js --mode=start"
+    "build": "node Index.js --mode=build",
+    "publish": "node Index.js --mode=publish",
+    "dev": "nodemon --watch markdown -e js,md,html,css,ini --ignore database.json Index.js --mode=start"
   },
   "dependencies": {
     "commander": "^10.0.1",
