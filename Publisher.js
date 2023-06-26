@@ -34,7 +34,7 @@ function Publisher(){
     var logoFileLocation = path.join(projectBaseLocation, "bootstraper-logo.png");
     if(await Common.fileExist(logoFileLocation)){
       var finalLogoLocation = path.join(projectBaseLocation, siteFolder,"theme" , "assets", "img", "bootstraper-logo.png");
-      await copyPromise(logoLocation, finalLogoLocation)
+      await copyPromise(logoFileLocation, finalLogoLocation)
       console.log("bootstraper-logo.png was published: "+finalLogoLocation);
     }
   }
