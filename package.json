@@ -4,13 +4,13 @@
   "version": "1.0.1",
   "main": "index.js",
   "bin": {
-    "docs4all": "Index.js"
+    "docs4all": "src/main/node/Index.js"
   },
   "scripts": {
-    "start": "node Index.js --mode=start",
-    "build": "node Index.js --mode=build",
-    "publish": "node Index.js --mode=publish",
-    "dev": "nodemon --watch markdown -e js,md,html,css,ini --ignore database.json Index.js --mode=start"
+    "start": "node src/main/node/Index.js --mode=start",
+    "build": "node src/main/node/Index.js --mode=build",
+    "publish": "node src/main/node/Index.js --mode=publish",
+    "dev": "nodemon --watch markdown -e js,md,html,css,ini --ignore database.json src/main/node/Index.js --mode=start"
   },
   "dependencies": {
     "commander": "^10.0.1",
