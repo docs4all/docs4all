@@ -30,7 +30,20 @@ site_name: Docs4all
 
 To override the logo, choose one of the following options.
 
-### Override default logo with file
+### Text logo
+
+To customize, create a **settings.yaml** file at the workspace root with the following value
+
+```yaml
+logo: Foo Bar Baz
+```
+
+Result will be:
+
+![image](https://github.com/docs4all/docs4all/assets/3322836/c87b7a50-c225-407c-b183-7748b5b609a7)
+
+
+### Image file 
 
 To customize, create a **settings.yaml** file at the workspace root with the following value
 
@@ -45,19 +58,7 @@ Result will be:
 
 ![image](https://github.com/docs4all/docs4all/assets/3322836/9a51521f-1a05-4578-8da0-b63f266d37ad)
 
-### Override default logo with text
-
-To customize, create a **settings.yaml** file at the workspace root with the following value
-
-```yaml
-logo: Foo Bar Baz
-```
-
-Result will be:
-
-![image](https://github.com/docs4all/docs4all/assets/3322836/c87b7a50-c225-407c-b183-7748b5b609a7)
-
-### Override default logo with a image url
+### Image url
 
 To customize, create a **settings.yaml** file at the workspace root with the following value
 
