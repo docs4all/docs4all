@@ -1,0 +1,4 @@
+site_name: Docs4all
+
+global_csr_variables:
+  best_language: Java

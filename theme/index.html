@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Docs4All</title>
+    <title>{{site_name}}</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <link href="assets/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
     <link href="assets/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
@@ -26,13 +26,18 @@
     <script type="text/javascript" src="./assets/vendor/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="./assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>   
     <script type="text/javascript" src="./assets/vendor/slide_menu/slide-menu.js"></script> 
+    <script type="text/javascript">
+      window._context = {};
+      window._context["global_csr_variables"] = {{global_csr_variables}};
+      console.log("global_csr_variables", window._context["global_csr_variables"])
+    </script> 
 </head>
 
 <body>
     <div class="wrapper">
         <nav id="sidebar" class="active slide-menu">
             <div id="sidebar-header" class="sidebar-header" style="cursor: pointer;color: black;" onclick="location.href='/';">
-              <!-- <img src="assets/img/bootstraper-logo.png" alt="bootraper logo" class="app-logo"> -->
+              {{logo}}
             </div>
             <ul id="menuContainer" class="list-unstyled components text-secondary">
 
@@ -94,8 +99,7 @@
     <script type="text/javascript" src="./assets/docs4all/js/markdown-converter.js"></script>
     <script type="text/javascript" src="./assets/docs4all/js/menu-controller.js"></script>
     <script type="text/javascript" src="./assets/docs4all/js/search-controller.js"></script>
-    <script type="text/javascript" src="./assets/docs4all/js/branding-controller.js"></script>
-    <script type="text/javascript" src="./assets/docs4all/js/app-entrypoint.js"></script>
+    <script type="text/javascript" src="./assets/docs4all/js/_app-entrypoint.js"></script>
 </body>
 
 </html>

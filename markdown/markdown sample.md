@@ -75,12 +75,3 @@ alert(message);
 ## Inline code
 
 This web site is using `markedjs/marked`.
-
-
-## Global variables
-
-If you configure the variable in settings.ini you should see **Java is the best** in the following line:
-
-{{best_language}} is the best
-
-{{best_language}} is the best

@@ -14,30 +14,55 @@ You can customize everything in docs4all.
 
 Just copy the **theme** folder from the [official repository](https://github.com/docs4all/docs4all) to the workspace root and then if you know html , css & javascript do whatever you want.
 
-### Override default logo with file
+## Html Title
+
+` <title>{{site_name}}</title>`
+
+To customize, create a **settings.yaml** file at the workspace root with the following value
+
+```yaml
+site_name: Docs4all
+```
+
+### Logo
 
 ![image](https://github.com/docs4all/docs4all/assets/3322836/3577a6c6-9469-48ad-adae-3a1e949773a3)
 
-If you want to customize only the image logo, create a new file called: **bootstraper-logo.png** at the workspace root. You could use my [Gimp](https://www.gimp.org) template to create your own logo:
+To override the logo, choose one of the following options.
 
-[https://github.com/docs4all/docs4all/tree/main/theme/assets/img](https://github.com/docs4all/docs4all/tree/main/theme/assets/img)
+### Override default logo with file
+
+To customize, create a **settings.yaml** file at the workspace root with the following value
+
+```yaml
+logo: ./nodejs-logo.png
+```
+
+- It is mandatory to start with `./`
+- In this example **nodejs-logo.png** should be at the root of workspace
+
+Result will be:
+
+![image](https://github.com/docs4all/docs4all/assets/3322836/9a51521f-1a05-4578-8da0-b63f266d37ad)
 
 ### Override default logo with text
 
-To customize, create a settings.ini file at the workspace root with the following values
+To customize, create a **settings.yaml** file at the workspace root with the following value
 
-```ini
-[branding]
-logo_type = text
-logo_value = My Wiki
+```yaml
+logo: Foo Bar Baz
 ```
+
+Result will be:
+
+![image](https://github.com/docs4all/docs4all/assets/3322836/c87b7a50-c225-407c-b183-7748b5b609a7)
 
 ### Override default logo with a image url
 
-To customize, create a settings.ini file at the workspace root with the following values
+To customize, create a **settings.yaml** file at the workspace root with the following value
 
-```ini
-[branding]
-logo_type = image_from_url
-logo_value = https://i.ibb.co/b2YYwYn/bootstraper-logo.png
+```yaml
+logo: https://i.ibb.co/zm3Xs2R/docs4all-logo-image.png
 ```
+
+To get a better dimensions, use our [template](https://github.com/docs4all/docs4all/wiki/Logo-Image-Template) or an image of 210 × 42 px

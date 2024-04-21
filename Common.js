@@ -21,4 +21,17 @@ Common.isRunningFromWithinDocs4All = async function () {
   } 
 };
 
+Common.isValidHttpUrl = function (string) {
+  try {
+    var url = new URL(string);
+    return true;
+  } catch (_) {
+    return false;  
+  }
+}
+
+Common.isImage = function (rawFileLocation) {
+  return rawFileLocation.match(/\.(jpg|jpeg|png|gif)$/i);
+}
+
 module.exports = Common;

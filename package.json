@@ -18,10 +18,12 @@
     "express": "4.17.1",
     "find-package-json": "^1.2.0",
     "fs-extra": "^10.0.1",
+    "js-yaml": "^4.1.0",
     "lokijs": "^1.5.12",
     "nodeboot-web-security-starter": "git+https://github.com/jrichardsz-software-architect-tools/nodeboot-web-security-starter.git",
     "nodemon": "^2.0.15",
     "read-ini-file": "^4.0.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "serve-static": "^1.15.0"
   }
 }
