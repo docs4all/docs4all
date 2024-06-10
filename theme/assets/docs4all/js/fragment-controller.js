@@ -18,7 +18,7 @@ function FragmentController() {
       return;
     }
 
-    var documentPath = window.location.hash.substring(1);
+    var documentPath = window.location.hash.substring(1).replace(/%20/g, " ");
     console.log(`Go to ${documentPath}`);
     
     // Create the event
@@ -45,15 +45,40 @@ function FragmentController() {
       return;
     }
 
-    var document = await apiClient.findDocumentByPath(documentPath);
+    var documentPathParts = documentPath.split("?");
+    var pagePath = documentPathParts[0];
+    var section = documentPathParts[1];
+
+    var document = await apiClient.findDocumentByPath(pagePath);
     if (typeof document === 'undefined' || document.length === 0 || typeof document[0].text === 'undefined') {
       return;
     }
     var html = markdownConverter.render(document[0].text);
     $("#rigthPreview").html(html);
+
+    if(section!=null){
+      var sectionReference = $("h2:contains('"+section+"')");
+      console.log(sectionReference)
+      if(sectionReference!=null){
+        console.log("focus!!")
+        sectionReference.get(0).scrollIntoView({behavior: 'smooth', block: 'center',
+        inline: 'center'})
+      }
+    }
+
+    
+    $('h2').click(function(event){
+      console.log(event.target.innerText)
+      window.location.hash = window.location.hash.substring(1).split("?")[0]+"?"+event.target.innerText
+    });
+
     //add the fragment
-    if(documentPath!="/root.md"){
-      window.location.hash = documentPath;
+    if(pagePath!="/root.md"){
+      if(section!=null){
+        window.location.hash = pagePath.replace(/%20/g, " ")+"?"+section;
+      }else{
+        window.location.hash = pagePath.replace(/%20/g, " ");
+      }
     }
     
   }  
