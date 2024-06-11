@@ -54,22 +54,42 @@ function FragmentController() {
       return;
     }
     var html = markdownConverter.render(document[0].text);
+    html = html.replace(/<h2>/g,"<h2 style='cursor:pointer'>");
+    html = html.replace(/<\/h2>/g, "<img class='permalink_icon' src='/assets/img/permalink-icon.png' /></h2>");
+
     $("#rigthPreview").html(html);
+
+    $('h2').hover(function(event){
+      try{
+        $(event.target.childNodes[1]).css('display','inline-block');
+      }catch(e){
+        console.log(e)
+      }
+    }, function(event){
+      try{
+        $(event.currentTarget.childNodes[1]).css('display','none');        
+      }catch(e){
+        console.log(e)
+      }
+    });    
 
     if(section!=null){
       var sectionReference = $("h2:contains('"+section+"')");
-      console.log(sectionReference)
       if(sectionReference!=null){
-        console.log("focus!!")
-        sectionReference.get(0).scrollIntoView({behavior: 'smooth', block: 'center',
-        inline: 'center'})
+        window.scrollTo(window.scrollX, sectionReference.offset().top);
+        sectionReference.effect("highlight", {}, 10000);
       }
     }
 
     
     $('h2').click(function(event){
-      console.log(event.target.innerText)
-      window.location.hash = window.location.hash.substring(1).split("?")[0]+"?"+event.target.innerText
+      try{
+        window.location.hash = window.location.hash.substring(1).split("?")[0]+"?"+event.target.innerText
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(window.location.href);
+      }catch(e){
+        console.log(e)
+      }
     });
 
     //add the fragment
