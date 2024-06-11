@@ -51,7 +51,7 @@ function MenuController() {
     var event = new CustomEvent("render-page", {
       "detail": documentPath
     });
-
+    console.log(event)
     // Dispatch/Trigger/Fire the event
     document.dispatchEvent(event);
   }

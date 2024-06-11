@@ -46,7 +46,7 @@ function FragmentController() {
     }
 
     var documentPathParts = documentPath.split("?");
-    var pagePath = documentPathParts[0];
+    var pagePath = documentPathParts[0].replace(/%20/g, " ");
     var section = documentPathParts[1];
 
     var document = await apiClient.findDocumentByPath(pagePath);
@@ -95,9 +95,9 @@ function FragmentController() {
     //add the fragment
     if(pagePath!="/root.md"){
       if(section!=null){
-        window.location.hash = pagePath.replace(/%20/g, " ")+"?"+section;
+        window.location.hash = pagePath.replace(/\s/g, "%20")+"?"+section;
       }else{
-        window.location.hash = pagePath.replace(/%20/g, " ");
+        window.location.hash = pagePath.replace(/\s/g, "%20");
       }
     }
     
