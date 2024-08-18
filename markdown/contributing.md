@@ -5,6 +5,7 @@
 }
 -->
 
+# Contributing
 
 Want to report a bug, request a feature, contribute or translate docs4all? At the moment most things can be
 contributed via the main [docs4all GitHub repository](https://github.com/docs4all/docs4all).
