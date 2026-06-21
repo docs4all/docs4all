@@ -39,7 +39,7 @@ function MenuController() {
   };
 
   this.menuItemOnclick = (event) => {
-    if (typeof event.target.getAttribute("page-path") === "undefined") {
+    if (event.target.getAttribute("page-path") == null) {
       console.log(`menu does not have page-path attribute.`);
       return;
     }
